@@ -1,0 +1,4 @@
+This is a devtoolset-4-toochain base image.
+
+Sample invocation:
+docker run -ti devtoolset-4-toolchain-rhel7 /bin/bash
