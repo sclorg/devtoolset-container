@@ -44,6 +44,8 @@ function check_result() {
 function test_docker_run_usage () {
   info "Testing 'docker run' usage ..."
 
+  sed -i "s/RELEASE/$(docker run --rm $IMAGE_NAME uname -r)/" expected-usage
+
   docker run --rm $IMAGE_NAME > $TMPDIR/actual-usage
   check_result "Exit code is zero" $? 0
 
