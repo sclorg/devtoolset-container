@@ -44,12 +44,12 @@ function check_result() {
 function test_docker_run_usage () {
   info "Testing 'docker run' usage ..."
 
-  sed -i "s/RELEASE/$(docker run --rm $IMAGE_NAME uname -r)/" expected-usage
+  sed "s/RELEASE/$(docker run --rm $IMAGE_NAME uname -r)/" expected-usage >> $TMPDIR/expected-usage-with-release
 
   docker run --rm $IMAGE_NAME > $TMPDIR/actual-usage
   check_result "Exit code is zero" $? 0
 
-  diff expected-usage $TMPDIR/actual-usage &> usage-diff
+  diff $TMPDIR/expected-usage-with-release $TMPDIR/actual-usage &> usage-diff
   check_result "Usage info matches the expected text" $? 0
 }
 
@@ -86,11 +86,25 @@ function test_sanity_eu_objdump_run () {
 function test_sanity_ocount_run () {
   info "Testing 'ocount ls' usage ..."
 
-  docker run --rm $IMAGE_NAME ocount ls &> $TMPDIR/actual-ocount
-  check_result "Exit code is zero" $? 1
+  default_event="`docker run --rm --privileged $IMAGE_NAME ophelp -d | cut -d: -f1`"
+  echo "Default perf event: $default_event"
 
-  grep "Your kernel's Performance Events Subsystem does not support your processor type." $TMPDIR/actual-ocount &> /dev/null
-  check_result "Output contains ocount's complaints" $? 0
+  docker run --rm --privileged $IMAGE_NAME ocount -b ls &> $TMPDIR/actual-ocount
+  check_result "Exit code is zero" $? 0
+
+  echo "ocount output:"
+  echo "----- ----- -----"
+  cat $TMPDIR/actual-ocount
+  echo "----- ----- -----"
+
+  grep "$default_event" $TMPDIR/actual-ocount &> /dev/null
+  check_result "at least, $default_event should appear in report" $? 0
+
+  # Keep these for later reference - some environments may not provide perf
+  # events inside containers, it may be necessary to tweak this script.
+  #
+  # grep "Your kernel's Performance Events Subsystem does not support your processor type." $TMPDIR/actual-ocount &> /dev/null
+  # check_result "Output contains ocount's complaints" $? 0
 }
 
 TMPDIR=`mktemp -d`
