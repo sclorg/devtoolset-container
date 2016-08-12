@@ -10,6 +10,8 @@
 # of testing.
 #
 
+THISDIR=$(dirname ${BASH_SOURCE[0]})
+
 if [ "$DEBUG" != "" ]; then
   set -x
 fi
@@ -44,12 +46,12 @@ function check_result() {
 function test_docker_run_usage () {
   info "Testing 'docker run' usage ..."
 
-  sed "s/RELEASE/$(docker run --rm $IMAGE_NAME uname -r)/" expected-usage >> $TMPDIR/expected-usage-with-release
+  sed "s/RELEASE/$(docker run --rm $IMAGE_NAME uname -r)/" $THISDIR/expected-usage > $TMPDIR/expected-usage-with-release
 
   docker run --rm $IMAGE_NAME > $TMPDIR/actual-usage
   check_result "Exit code is zero" $? 0
 
-  diff $TMPDIR/expected-usage-with-release $TMPDIR/actual-usage &> usage-diff
+  diff $TMPDIR/expected-usage-with-release $TMPDIR/actual-usage &> $TMPDIR/usage-diff
   check_result "Usage info matches the expected text" $? 0
 }
 
@@ -59,7 +61,7 @@ function test_sanity_valgrind_usage () {
   docker run --rm $IMAGE_NAME valgrind --version &> $TMPDIR/actual-valgrind-version
   check_result "Exit code is zero" $? 0
 
-  grep 'valgrind-3.11.0' $TMPDIR/actual-valgrind-version &> /dev/null
+  grep 'valgrind-3.1' $TMPDIR/actual-valgrind-version &> /dev/null
   check_result "Output contains valgrind version" $? 0
 }
 

@@ -10,6 +10,8 @@
 # of testing.
 #
 
+THISDIR=$(dirname ${BASH_SOURCE[0]})
+
 if [ "$DEBUG" != "" ]; then
   set -x
 fi
@@ -47,7 +49,7 @@ function test_docker_run_usage () {
   docker run --rm $IMAGE_NAME > $TMPDIR/actual-usage
   check_result "Exit code is zero" $? 0
 
-  diff expected-usage $TMPDIR/actual-usage &> /dev/null
+  diff $THISDIR/expected-usage $TMPDIR/actual-usage &> /dev/null
   check_result "Usage info matches the expected text" $? 0
 }
 
@@ -122,7 +124,7 @@ EOF
   test -e $TMPDIR/foo
   check_result "Test binary exists" $? 0
 
-  docker run --rm -v $TMPDIR:$TMPDIR:z $IMAGE_NAME gdb -batch -ex 'run' -ex 'bt' $TMPDIR/foo &> $TMPDIR/actual-output
+  docker run --rm --privileged -v $TMPDIR:$TMPDIR:z $IMAGE_NAME gdb -batch -ex 'run' -ex 'bt' $TMPDIR/foo &> $TMPDIR/actual-output
   check_result "Exit code is zero" $? 0
 
   grep -q "Program received signal SIGSEGV, Segmentation fault." $TMPDIR/actual-output &> /dev/null
