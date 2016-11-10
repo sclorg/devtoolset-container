@@ -1,4 +1,4 @@
-FROM rhel7:7.2
+FROM rhel7
 MAINTAINER Marek Polacek <polacek@redhat.com>
 
 LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 4" \
@@ -10,7 +10,10 @@ LABEL Version="4"
 LABEL Release="10.1"
 LABEL Architecture="x86_64"
 
-RUN yum-config-manager --enable rhel-server-rhscl-7-rpms && \
+# To use subscription inside container yum command has to be run first (before yum-config-manager)
+# https://access.redhat.com/solutions/1443553
+RUN yum repolist > /dev/null && \
+    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     yum-config-manager --disable epel >/dev/null || : && \
     INSTALL_PKGS="devtoolset-4-gcc devtoolset-4-gcc-c++ devtoolset-4-gcc-gfortran devtoolset-4-gdb" && \
