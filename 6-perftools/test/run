@@ -1,0 +1,121 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of tools, packaged in perftools image.
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+
+if [ "$DEBUG" != "" ]; then
+  set -x
+fi
+
+IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-6-perftools-rhel7}
+THISDIR=$(dirname ${BASH_SOURCE[0]})
+
+function info () {
+    echo -e "\e[1m[INFO] $@\e[0m"
+}
+
+function pass () {
+    echo -e "\e[1;32m[PASS] $@\e[0m"
+}
+
+function error () {
+    echo -e "\e[1;31m[ERROR] $@\e[0m"
+}
+
+function check_result() {
+    local label="$1"
+    local result="$2"
+    local expected="$3"
+
+    if [[ "$result" = "$expected" ]]; then
+        pass "$label: PASS"
+    else
+        error "$label: FAIL ($result)"
+        RESULT=1
+    fi
+}
+
+function remove_kernel_ver() {
+    cat | sed -e 's/\(% docker commit \).*$/\1/'
+}
+
+function test_docker_run_usage () {
+  info "Testing 'docker run' usage ..."
+
+  docker run --rm $IMAGE_NAME | remove_kernel_ver > $TMPDIR/actual-usage
+  check_result "Exit code is zero" $? 0
+
+  cat "$THISDIR"/expected-usage | remove_kernel_ver > $TMPDIR/expected-usage
+  diff "$TMPDIR"/expected-usage $TMPDIR/actual-usage &> usage-diff
+  check_result "Usage info matches the expected text" $? 0
+}
+
+function test_sanity_valgrind_usage () {
+  info "Testing 'valgrind --version' usage ..."
+
+  docker run --rm $IMAGE_NAME valgrind --version &> $TMPDIR/actual-valgrind-version
+  check_result "Exit code is zero" $? 0
+
+  grep 'valgrind-3.11.0' $TMPDIR/actual-valgrind-version &> /dev/null
+  check_result "Output contains valgrind version" $? 0
+}
+
+function test_sanity_valgrind_run () {
+  info "Testing 'valgrind /foo/ls' usage ..."
+
+  docker run --rm -v /bin:/foo:ro $IMAGE_NAME valgrind /foo/ls &> $TMPDIR/actual-valgrind-run
+  check_result "Exit code is zero" $? 0
+
+  grep 'ERROR SUMMARY: 0 errors from 0 contexts' $TMPDIR/actual-valgrind-run &> /dev/null
+  check_result "Output contains valgrind summary" $? 0
+}
+
+function test_sanity_eu_objdump_run () {
+  info "Testing 'eu-objdump /foo/ls' usage ..."
+
+  docker run --rm -v /bin:/foo:ro $IMAGE_NAME eu-objdump -d /foo/ls &> $TMPDIR/actual-objdump
+  check_result "Exit code is zero" $? 0
+
+  grep 'Disassembly of section' $TMPDIR/actual-objdump &> /dev/null && grep 'movzbl' $TMPDIR/actual-objdump &> /dev/null
+  check_result "Output contains disassembled code" $? 0
+}
+
+function test_sanity_ocount_run () {
+  info "Testing 'ocount ls' usage ..."
+
+  docker run --rm --privileged $IMAGE_NAME ocount ls &> $TMPDIR/actual-ocount
+  check_result "Exit code is zero" $? 0
+
+  # Keep these for later reference - some environments may not provide perf
+  # events inside containers, it may be necessary to tweak this script.
+  #
+  # grep "Your kernel's Performance Events Subsystem does not support your processor type." $TMPDIR/actual-ocount &> /dev/null
+  # check_result "Output contains ocount's complaints" $? 1
+}
+
+TMPDIR=`mktemp -d`
+chmod a+rwx $TMPDIR
+
+RESULT=0
+
+test_docker_run_usage
+test_sanity_valgrind_usage
+test_sanity_valgrind_run
+test_sanity_eu_objdump_run
+test_sanity_ocount_run
+
+rm -rf $TMPDIR
+
+if [ "$RESULT" = "0" ]; then
+    info "All tests finished"
+else
+    error "Some tests failed"
+    exit $RESULT
+fi
