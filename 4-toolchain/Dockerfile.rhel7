@@ -4,11 +4,12 @@ MAINTAINER Marek Polacek <polacek@redhat.com>
 LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 4" \
       io.k8s.display-name="Developer Toolset 4 Toolchain"
 
-LABEL BZComponent="devtoolset-4-toolchain-docker"
-LABEL Name="rhscl_beta/devtoolset-4-toolchain-rhel7"
-LABEL Version="4"
-LABEL Release="10.1"
-LABEL Architecture="x86_64"
+# Labels consumed by Red Hat build service
+LABEL com.redhat.component="devtoolset-4-toolchain-docker"
+LABEL name="rhscl_beta/devtoolset-4-toolchain-rhel7"
+LABEL version="4"
+LABEL release="10.1"
+LABEL architecture="x86_64"
 
 # To use subscription inside container yum command has to be run first (before yum-config-manager)
 # https://access.redhat.com/solutions/1443553
