@@ -1,11 +1,10 @@
 FROM centos:centos7
 MAINTAINER Red Hat, Inc.
 
-# FIXME: using --nogpgcheck option because of https://bugs.centos.org/view.php?id=12262
 RUN yum install -y centos-release-scl && \
     yum-config-manager --enable centos-sclo-rh-testing && \
     yum-config-manager --disable epel >/dev/null || : && \
-    yum install -y --nogpgcheck --setopt=tsflags=nodocs devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel && \
+    yum install -y --setopt=tsflags=nodocs devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel && \
     yum clean all -y
 
 # Each language image can have 'contrib' a directory with extra files needed to
