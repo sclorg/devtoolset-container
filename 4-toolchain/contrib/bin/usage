@@ -1,8 +1,23 @@
 #!/bin/sh
 cat <<EOF
-This is a devtoolset-4-toochain base image.
+Developer Toolset from Red Hat Software Collections provides various tools for C and C++ developers. The Toolchain part of the Developer Toolset contains tools for building such applications (GCC compiler for C and C++, GDB, gfortran compiler, etc.).
 
-Sample invocation:
-docker run -ti devtoolset-4-toolchain-rhel7 /bin/bash
+
+Basic Usage
+-----------
+Suppose you have a source for a C application in the /src/app directory on the host and that we use the RHEL-based variant (Docker image called rhscl/devtoolset-6-toolchain-rhel7). To build such application you can mount the application sources to the container and run appropriate tools interactively:
+
+    docker run -ti --rm -v /src/app:/opt/app-root/src:z rhscl/devtoolset-6-toolchain-rhel7 bash
+    bash-4.3$ gcc -o foo -ggdb -g2 foo.c
+
+That will compile one file from /src/app using GCC from container with options -ggdb -g2.
+
+To run make non-interactively, run:
+
+    docker run -ti --rm -v $PWD:/opt/app-root/src:z rhscl/devtoolset-6-toolchain-rhel7 make
+
+That will compile the project from current directory using make utility.
+
+In both cases above user must ensure that the directory where GCC will write data into is writable for the user used inside the container (by default UID 1001).
 EOF
 
