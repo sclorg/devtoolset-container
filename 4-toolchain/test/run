@@ -69,7 +69,7 @@ function test_sanity_gdb_usage () {
   docker run --rm $IMAGE_NAME gdb -v &> $TMPDIR/actual-gdb-v
   check_result "Exit code is zero" $? 0
 
-  grep 'GNU gdb (GDB) Red Hat Enterprise Linux ' $TMPDIR/actual-gdb-v &> /dev/null
+  grep 'GNU gdb (GDB) .* ' $TMPDIR/actual-gdb-v &> /dev/null
   check_result "Output contains gdb version" $? 0
 }
 
