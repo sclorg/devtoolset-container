@@ -3,9 +3,9 @@ MAINTAINER Red Hat, Inc.
 
 # Labels consumed by Red Hat build service
 LABEL com.redhat.component="devtoolset-4-perftools-docker"
-LABEL name="rhscl_beta/devtoolset-4-perftools-rhel7"
+LABEL name="rhscl/devtoolset-4-perftools-rhel7"
 LABEL version="4"
-LABEL release="9"
+LABEL release="1"
 LABEL architecture="x86_64"
 
 # To use subscription inside container yum command has to be run first (before yum-config-manager)
