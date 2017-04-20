@@ -6,7 +6,7 @@ Developer Toolchain is part of the Red Hat Software Collections and the Toolchai
 
 Description
 -----------
-Developer Toolset from Red Hat Software Collections provides various tools for C and C++ developers. The Toolchain part of the Developer Toolset contains tools for building such applications (GCC compiler for C and C++, GDB, gfortran compiler, etc.). Perftools part contains then tools for debugging and further analysis of the applications (oprofile, valgrind, systemtap, etc.).
+Developer Toolset from Red Hat Software Collections provides various tools for C and C++ developers, so they are able to use the Developer Toolset tools without needing to be running a RHEL host. The Toolchain part of the Developer Toolset contains tools for building such applications (GCC compiler for C and C++, GDB, gfortran compiler, etc.). Perftools part contains then tools for debugging and further analysis of the applications (oprofile, valgrind, systemtap, etc.).
 
 
 Usage
@@ -39,6 +39,25 @@ You can set the following mount points by passing the `-v /host:/container` flag
 | :----------------------- | --------------------------------- |
 |  `/opt/app-root`         | Directory for application sources |
 
+
+
+Missing dependencies
+--------------------
+It may happen that the program combiled in the container won't have all the dependencies available. In that case, the Developer Toolset Container Image is supposed to be used as a starting point for users, so they do not need to spin their own container from scratch. Creating a new layer on top of the existing container image can be done by writing a new Dockerfile, that will use this image in the FROM clause. For example to install `boost-devel` library as a dependency, create the following Dockerfile:
+
+```
+FROM rhscl/devtoolset-6-toolchain-rhel7
+
+USER 0
+RUN yum install -y --setopt=tsflags=nodocs boost-devel && yum clean all -y
+USER 1001
+```
+
+Then, build the Dockerfile like this (you need a subscribed RHEL-7 machine to install additional RPMs into the RHEL-based container image):
+
+```
+docker build -t myorg/devtoolset-6-toolchain-rhel7 .
+```
 
 
 Troubleshooting
