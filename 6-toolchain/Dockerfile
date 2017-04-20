@@ -4,12 +4,11 @@ MAINTAINER Marek Polacek <polacek@redhat.com>
 LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 6" \
       io.k8s.display-name="Developer Toolset 6 Toolchain"
 
-RUN yum install -y centos-release-scl && \
-    yum-config-manager --enable centos-sclo-rh-testing && \
-    yum-config-manager --disable epel >/dev/null || : && \
-    yum install -y --setopt=tsflags=nodocs devtoolset-6-gcc devtoolset-6-gcc-c++ devtoolset-6-gcc-gfortran devtoolset-6-gdb && \
+RUN yum install -y centos-release-scl-rh && \
+    INSTALL_PKGS="devtoolset-6-gcc devtoolset-6-gcc-c++ devtoolset-6-gcc-gfortran devtoolset-6-gdb" && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
     yum clean all -y
-
 
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
