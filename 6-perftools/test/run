@@ -63,7 +63,7 @@ function test_sanity_valgrind_usage () {
   docker run --rm $IMAGE_NAME valgrind --version &> $TMPDIR/actual-valgrind-version
   check_result "Exit code is zero" $? 0
 
-  grep 'valgrind-3.12.0' $TMPDIR/actual-valgrind-version &> /dev/null
+  grep 'valgrind-3.11.0' $TMPDIR/actual-valgrind-version &> /dev/null
   check_result "Output contains valgrind version" $? 0
 }
 
