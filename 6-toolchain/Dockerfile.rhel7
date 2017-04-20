@@ -1,4 +1,4 @@
-FROM rhel7:7.3-45
+FROM rhel7
 MAINTAINER Marek Polacek <polacek@redhat.com>
 
 LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 6" \

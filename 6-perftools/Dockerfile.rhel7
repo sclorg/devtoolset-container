@@ -2,15 +2,15 @@ FROM rhel7
 MAINTAINER Red Hat, Inc.
 
 LABEL com.redhat.component="devtoolset-6-perftools-docker"
-LABEL name="rhscl-beta/devtoolset-6-perftools-rhel7"
+LABEL name="rhscl/devtoolset-6-perftools-rhel7"
 LABEL version="6"
-LABEL release="4"
+LABEL release="1"
 LABEL architecture="x86_64"
 LABEL io.k8s.description="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
 LABEL io.k8s.display-name="Developer Toolset 6 Performance Tools"
 LABEL io.k8s.min-memory="2Gi"
 
-RUN yum-config-manager --enable rhel-server-rhscl-beta-7-rpms && \
+RUN yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     yum-config-manager --disable epel >/dev/null || : && \
     yum install -y --setopt=tsflags=nodocs devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel && \
