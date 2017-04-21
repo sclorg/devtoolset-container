@@ -8,8 +8,10 @@ Users can choose between RHEL and CentOS based images.
 Versions
 ---------------
 Developer toolset versions and variants currently provided are:
-* 4-toolchain
-* 4-perftools
+* [Toolchain Container Image from Developer Toolset 4](4-toolchain)
+* [Perftools Container Image from Developer Toolset 4](4-perftools)
+* [Toolchain Container Image from Developer Toolset 6](6-toolchain)
+* [Perftools Container Image from Developer Toolset 6](6-perftools)
 
 RHEL versions currently supported are:
 * RHEL7

@@ -1,0 +1,105 @@
+.TH "DEVTOOLSET-6-TOOLCHAIN-RHEL7" "1" " Container Image Pages" "Red Hat" "April 21, 2017"  ""
+
+
+.SH Toolchain For Building C and C++ Applications Docker Image
+.PP
+Developer Toolchain is part of the Red Hat Software Collections and the Toolchain is a subset of tools usable for building C and C++ applications. Docker container based on Red Hat Software Collection packages is available as rhscl/devtoolset\-6\-toolchain\-rhel7 in registry.access.redhat.com. Docker container based on CentOS packagess is available as centos/devtoolset\-6\-toolchain\-centos7 in the Docker Hub.
+
+.SH Description
+.PP
+Developer Toolset from Red Hat Software Collections provides various tools for C and C++ developers, so they are able to use the Developer Toolset tools without needing to be running a RHEL host. The Toolchain part of the Developer Toolset contains tools for building such applications (GCC compiler for C and C++, GDB, gfortran compiler, etc.). Perftools part contains then tools for debugging and further analysis of the applications (oprofile, valgrind, systemtap, etc.).
+
+.SH Usage
+.PP
+Suppose you have a source for a C application in the \fB\fC/src/app\fR directory on the host and that we use the RHEL\-based variant (Docker image called rhscl/devtoolset\-6\-toolchain\-rhel7). To build such application you can mount the application sources to the container and run appropriate tools interactively:
+
+.PP
+.RS
+
+.nf
+docker run \-ti \-\-rm \-v /src/app:/opt/app\-root/src:z rhscl/devtoolset\-6\-toolchain\-rhel7 bash
+bash\-4.3$ gcc \-o foo \-ggdb \-g2 foo.c
+
+.fi
+.RE
+
+.PP
+That will compile one file from \fB\fC/src/app\fR using GCC from container with options \fB\fC\-ggdb \-g2\fR.
+
+.PP
+To run \fB\fCmake\fR non\-interactively, run:
+
+.PP
+.RS
+
+.nf
+docker run \-ti \-\-rm \-v $PWD:/opt/app\-root/src:z rhscl/devtoolset\-6\-toolchain\-rhel7 make
+
+.fi
+.RE
+
+.PP
+That will compile the project from current directory using \fB\fCmake\fR utility.
+
+.PP
+In both cases above user must ensure that the directory where GCC will write data into is writable for the user used inside the container (by default UID 1001).
+
+.SH Environment variables and volumes
+.PP
+You can set the following mount points by passing the \fB\fC\-v /host:/container\fR flag to Docker.
+.TS
+allbox;
+Volume mount point  Description 
+\fB\fC/opt/app\-root\fR		Directory for application sources	
+
+.TE
+
+.SH Missing dependencies
+.PP
+It may happen that the program combiled in the container won't have all the dependencies available. In that case, the Developer Toolset Container Image is supposed to be used as a starting point for users, so they do not need to spin their own container from scratch. Creating a new layer on top of the existing container image can be done by writing a new Dockerfile, that will use this image in the FROM clause. For example to install \fB\fCboost\-devel\fR library as a dependency, create the following Dockerfile:
+
+.PP
+.RS
+
+.nf
+FROM rhscl/devtoolset\-6\-toolchain\-rhel7
+
+USER 0
+RUN yum install \-y \-\-setopt=tsflags=nodocs boost\-devel \&\& yum clean all \-y
+USER 1001
+
+.fi
+.RE
+
+.PP
+Then, build the Dockerfile like this (you need a subscribed RHEL\-7 machine to install additional RPMs into the RHEL\-based container image):
+
+.PP
+.RS
+
+.nf
+docker build \-t myorg/devtoolset\-6\-toolchain\-rhel7 .
+
+.fi
+.RE
+
+.SH Troubleshooting
+.PP
+The error log or standard log if container is run non\-interactively is available in the container log. The log can be examined by running:
+
+.PP
+.RS
+
+.nf
+docker logs <container>
+
+.fi
+.RE
+
+.SH See also
+.PP
+Dockerfile and other sources for this container image are available on
+
+\[la]https://github.com/sclorg/devtoolset-container\[ra].
+In that repository, Dockerfile for CentOS is called Dockerfile, Dockerfile
+for RHEL is called Dockerfile.rhel7.

@@ -1,13 +1,12 @@
 FROM rhel7
 MAINTAINER Marek Polacek <polacek@redhat.com>
 
-LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 4" \
-      io.k8s.display-name="Developer Toolset 4 Toolchain"
+LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 6" \
+      io.k8s.display-name="Developer Toolset 6 Toolchain"
 
-# Labels consumed by Red Hat build service
-LABEL com.redhat.component="devtoolset-4-toolchain-docker"
-LABEL name="rhscl/devtoolset-4-toolchain-rhel7"
-LABEL version="4"
+LABEL com.redhat.component="devtoolset-6-toolchain-docker"
+LABEL name="rhscl/devtoolset-6-toolchain-rhel7"
+LABEL version="6"
 LABEL release="1"
 LABEL architecture="x86_64"
 
@@ -17,7 +16,7 @@ RUN yum repolist > /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     yum-config-manager --disable epel >/dev/null || : && \
-    INSTALL_PKGS="devtoolset-4-gcc devtoolset-4-gcc-c++ devtoolset-4-gcc-gfortran devtoolset-4-gdb" && \
+    INSTALL_PKGS="devtoolset-6-gcc devtoolset-6-gcc-c++ devtoolset-6-gcc-gfortran devtoolset-6-gdb" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
@@ -28,7 +27,7 @@ RUN yum repolist > /dev/null && \
 COPY ./contrib/ /opt/app-root
 
 ENV HOME=/opt/app-root/src \
-    PATH=/opt/app-root/src/bin:/opt/app-root/bin:/opt/rh/devtoolset-4/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/opt/app-root/src/bin:/opt/app-root/bin:/opt/rh/devtoolset-6/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \

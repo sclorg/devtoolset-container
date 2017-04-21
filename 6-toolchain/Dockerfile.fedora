@@ -1,0 +1,50 @@
+FROM fedora:25
+MAINTAINER Honza Horak <hhorak@redhat.com>
+
+LABEL io.k8s.description="Platform for building C and C++ applications" \
+      io.k8s.display-name="Fedora variant of Developer Toolset's C/C++ Toolchain from Software Collections"
+
+ENV NAME=perftools \
+    VERSION=1 \
+    RELEASE=1 \
+    ARCH=x86_64
+
+LABEL com.redhat.component="$NAME" \
+      name="$FGC/$NAME" \
+      version="$VERSION" \
+      release="$RELEASE.$DISTTAG" \
+      architecture="$ARCH" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z f25/toolchain bash" \
+      help="docker run IMAGE cat /help.1 | /usr/bin/groff -t -man -ETascii"
+
+RUN INSTALL_PKGS="gcc gcc-c++ gcc-gfortran gdb make" && \
+    dnf install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    dnf clean all -y
+
+# Use entrypoint so path is correctly adjusted already at the time the command
+# is searching, so something like docker run IMG gcc runs binary from SCL.
+COPY contrib/bin/container-entrypoint /usr/bin/container-entrypoint
+
+# Install the usage script with base image usage informations
+COPY contrib/bin/usage /usr/bin/usage
+
+# Copy README.md to the container
+COPY README.md /help.md
+
+ENV HOME=/opt/app-root/src \
+    PATH=/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN mkdir -p ${HOME} && \
+    groupadd -r default -f -g 1001 && \
+    useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
+    -c "Default Application User" default && \
+    chown -R 1001:1001 /opt/app-root
+
+USER 1001
+
+WORKDIR ${HOME}
+
+# Set the default CMD to print the usage of the language image
+ENTRYPOINT ["container-entrypoint"]
+CMD ["usage"]
