@@ -9,11 +9,13 @@ ENV NAME=perftools \
     RELEASE=1 \
     ARCH=x86_64
 
-LABEL BZComponent="$NAME" \
-      Name="$FGC/$NAME" \
-      Version="$VERSION" \
-      Release="$RELEASE.$DISTTAG" \
-      Architecture="$ARCH"
+LABEL com.redhat.component="$NAME" \
+      name="$FGC/$NAME" \
+      version="$VERSION" \
+      release="$RELEASE.$DISTTAG" \
+      architecture="$ARCH" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z f25/toolchain bash" \
+      help="docker run IMAGE cat /help.1 | /usr/bin/groff -t -man -ETascii"
 
 RUN INSTALL_PKGS="gcc gcc-c++ gcc-gfortran gdb make" && \
     dnf install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
