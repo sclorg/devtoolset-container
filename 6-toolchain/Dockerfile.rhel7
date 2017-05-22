@@ -42,12 +42,12 @@ WORKDIR ${HOME}
 
 # Use entrypoint so path is correctly adjusted already at the time the command
 # is searching, so something like docker run IMG gcc runs binary from SCL.
-ADD contrib/bin/container-entrypoint /usr/bin/container-entrypoint
+COPY contrib/bin/container-entrypoint /usr/bin/container-entrypoint
 
 # Install the usage script with base image usage informations
-ADD contrib/bin/usage /usr/local/bin/usage
+COPY contrib/bin/usage /usr/local/bin/usage
 
-ADD contrib/etc/scl_enable /opt/app-root/etc/scl_enable
+COPY contrib/etc/scl_enable /opt/app-root/etc/scl_enable
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
