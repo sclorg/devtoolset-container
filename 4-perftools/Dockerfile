@@ -1,5 +1,17 @@
 FROM centos:centos7
-MAINTAINER Red Hat, Inc.
+LABEL MAINTAINER Red Hat, Inc.
+
+ENV SUMMARY="Developer Toolset 4 Performance Tools" \
+    DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
+
+LABEL com.redhat.component="devtoolset-4-perftools-docker" \
+      name="centos/devtoolset-4-perftools-centos7" \
+      version="4" \
+      release="1" \
+      summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
+      io.k8s.display-name="Devtoolset 4 Perftools"
 
 RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="devtoolset-4-systemtap devtoolset-4-valgrind devtoolset-4-dyninst devtoolset-4-dyninst-devel devtoolset-4-elfutils devtoolset-4-elfutils-devel devtoolset-4-oprofile devtoolset-4-oprofile-jit devtoolset-4-oprofile-devel" && \

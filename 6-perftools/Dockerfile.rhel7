@@ -1,14 +1,18 @@
 FROM rhel7
-MAINTAINER Red Hat, Inc.
+LABEL MAINTAINER Red Hat, Inc.
 
-LABEL com.redhat.component="devtoolset-6-perftools-docker"
-LABEL name="rhscl/devtoolset-6-perftools-rhel7"
-LABEL version="6"
-LABEL release="1"
-LABEL architecture="x86_64"
-LABEL io.k8s.description="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
-LABEL io.k8s.display-name="Developer Toolset 6 Performance Tools"
-LABEL io.k8s.min-memory="2Gi"
+ENV SUMMARY="Developer Toolset 6 Performance Tools" \
+    DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
+
+LABEL com.redhat.component="devtoolset-6-perftools-docker" \
+      name="rhscl/devtoolset-6-perftools-rhel7" \
+      version="6" \
+      release="1" \
+      summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
+      io.k8s.display-name="Developer Toolset 6 Performance Tools" \
+      io.k8s.min-memory="2Gi"
 
 # To use subscription inside container yum command has to be run first (before yum-config-manager)
 # https://access.redhat.com/solutions/1443553

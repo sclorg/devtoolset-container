@@ -1,7 +1,16 @@
 FROM centos:centos7
-MAINTAINER Marek Polacek <polacek@redhat.com>
+LABEL MAINTAINER Marek Polacek <polacek@redhat.com>
 
-LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 4" \
+ENV SUMMARY="Developer Toolset 4 Toolchain" \
+    DESCRIPTION="Platform for building applications using Red Hat Developer Toolset 4"
+
+LABEL com.redhat.component="devtoolset-4-toolchain-docker" \
+      name="centos/devtoolset-4-toolchain-centos7" \
+      version="4" \
+      release="1" \
+      summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
       io.k8s.display-name="Developer Toolset 4 Toolchain"
 
 RUN yum install -y centos-release-scl-rh && \

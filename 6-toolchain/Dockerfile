@@ -1,7 +1,16 @@
 FROM centos:centos7
-MAINTAINER Marek Polacek <polacek@redhat.com>
+LABEL MAINTAINER Marek Polacek <polacek@redhat.com>
 
-LABEL io.k8s.description="Platform for building applications using Red Hat Developer Toolset 6" \
+ENV SUMMARY="Developer Toolset 6 Toolchain" \
+    DESCRIPTION="Platform for building applications using Red Hat Developer Toolset 6"
+
+LABEL com.redhat.component="devtoolset-6-toolchain-docker" \
+      name="centos/devtoolset-6-toolchain-centos7" \
+      version="6" \
+      release="1" \
+      summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
       io.k8s.display-name="Developer Toolset 6 Toolchain"
 
 RUN yum install -y centos-release-scl-rh && \
