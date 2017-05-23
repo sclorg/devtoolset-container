@@ -1,7 +1,7 @@
 FROM centos:centos7
 LABEL MAINTAINER Red Hat, Inc.
 
-ENV SUMMARY="Developer Toolset 6 Performance Tools" \
+ENV SUMMARY="Red Hat Developer Toolset 6 Performance Tools container image" \
     DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
 
 LABEL com.redhat.component="devtoolset-6-perftools-docker" \

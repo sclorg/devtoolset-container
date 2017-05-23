@@ -1,7 +1,7 @@
 FROM fedora:25
 LABEL MAINTAINER Honza Horak <hhorak@redhat.com>
 
-ENV SUMMARY="Fedora variant of Developer Toolset's C/C++ Toolchain from Software Collections" \
+ENV SUMMARY="Fedora variant of Red Hat Developer Toolset's C/C++ Toolchain from Software Collections" \
     DESCRIPTION="Platform for building C and C++ applications" \
     NAME=perftools \
     VERSION=1 \

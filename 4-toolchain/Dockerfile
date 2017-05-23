@@ -1,7 +1,7 @@
 FROM centos:centos7
 LABEL MAINTAINER Marek Polacek <polacek@redhat.com>
 
-ENV SUMMARY="Developer Toolset 4 Toolchain" \
+ENV SUMMARY="Red Hat Developer Toolset 4 Toolchain container image" \
     DESCRIPTION="Platform for building applications using Red Hat Developer Toolset 4"
 
 LABEL com.redhat.component="devtoolset-4-toolchain-docker" \
