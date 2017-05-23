@@ -1,5 +1,18 @@
 FROM centos:centos7
-MAINTAINER Red Hat, Inc.
+LABEL MAINTAINER Red Hat, Inc.
+
+ENV SUMMARY="Red Hat Developer Toolset 6 Performance Tools container image" \
+    DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
+
+LABEL com.redhat.component="devtoolset-6-perftools-docker" \
+      name="centos/devtoolset-6-perftools-centos7" \
+      version="6" \
+      release="1" \
+      summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
+      io.k8s.display-name="Developer Toolset 6 Performance Tools" \
+      io.k8s.min-memory="2Gi"
 
 RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel" && \
@@ -21,7 +34,7 @@ USER 0
 
 WORKDIR ${HOME}
 
-ADD contrib/etc/scl_enable /root/etc/scl_enable
+COPY contrib/etc/scl_enable /root/etc/scl_enable
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/root/etc/scl_enable \
