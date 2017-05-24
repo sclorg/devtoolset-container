@@ -20,9 +20,8 @@ RUN yum install -y centos-release-scl-rh && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /root
+# Copy extra files to the image.
+COPY ./root/ /
 
 ENV HOME=/root \
     PATH=/root/bin:/opt/rh/devtoolset-6/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -34,7 +33,7 @@ USER 0
 
 WORKDIR ${HOME}
 
-COPY contrib/etc/scl_enable /root/etc/scl_enable
+COPY root/root/etc/scl_enable /root/etc/scl_enable
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/root/etc/scl_enable \

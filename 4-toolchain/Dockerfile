@@ -27,9 +27,8 @@ RUN yum install -y centos-release-scl-rh && \
     yum clean all -y
 
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
+# Copy extra files to the image.
+COPY ./root/ /
 
 ENV HOME=/opt/app-root/src \
     PATH=/opt/app-root/src/bin:/opt/app-root/bin:/opt/rh/devtoolset-4/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -47,12 +46,12 @@ WORKDIR ${HOME}
 
 # Use entrypoint so path is correctly adjusted already at the time the command
 # is searching, so something like docker run IMG gcc runs binary from SCL.
-COPY contrib/bin/container-entrypoint /usr/bin/container-entrypoint
+COPY root/opt/app-root/bin/container-entrypoint /usr/bin/container-entrypoint
 
 # Install the usage script with base image usage informations
-COPY contrib/bin/usage /usr/local/bin/usage
+COPY root/opt/app-root/bin/usage /usr/local/bin/usage
 
-COPY contrib/etc/scl_enable /opt/app-root/etc/scl_enable
+COPY root/opt/app-root/etc/scl_enable /opt/app-root/etc/scl_enable
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
