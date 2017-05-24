@@ -25,12 +25,15 @@ RUN INSTALL_PKGS="gcc gcc-c++ gcc-gfortran gdb make" && \
     rpm -V $INSTALL_PKGS && \
     dnf clean all -y
 
+# Copy extra files to the image.
+COPY ./root/ /
+
 # Use entrypoint so path is correctly adjusted already at the time the command
 # is searching, so something like docker run IMG gcc runs binary from SCL.
-COPY contrib/bin/container-entrypoint /usr/bin/container-entrypoint
+COPY root/opt/app-root/bin/container-entrypoint /usr/bin/container-entrypoint
 
 # Install the usage script with base image usage informations
-COPY contrib/bin/usage /usr/bin/usage
+COPY root/opt/app-root/bin/usage /usr/local/bin/usage
 
 # Copy README.md to the container
 COPY README.md /help.md
