@@ -38,8 +38,6 @@ USER 0
 
 WORKDIR ${HOME}
 
-COPY root/root/etc/scl_enable /root/etc/scl_enable
-
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/root/etc/scl_enable \
     ENV=/root/etc/scl_enable \
