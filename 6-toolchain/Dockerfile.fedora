@@ -28,13 +28,6 @@ RUN INSTALL_PKGS="gcc gcc-c++ gcc-gfortran gdb make" && \
 # Copy extra files to the image.
 COPY ./root/ /
 
-# Use entrypoint so path is correctly adjusted already at the time the command
-# is searching, so something like docker run IMG gcc runs binary from SCL.
-COPY root/opt/app-root/bin/container-entrypoint /usr/bin/container-entrypoint
-
-# Install the usage script with base image usage informations
-COPY root/opt/app-root/bin/usage /usr/local/bin/usage
-
 # Copy README.md to the container
 COPY README.md /help.md
 
@@ -45,7 +38,7 @@ RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \
     useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
     -c "Default Application User" default && \
-    chown -R 1001:1001 /opt/app-root
+    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/local/bin/usage
 
 USER 1001
 

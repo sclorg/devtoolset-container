@@ -42,19 +42,12 @@ RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \
     useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
     -c "Default Application User" default && \
-    chown -R 1001:1001 /opt/app-root && \
-    chmod u+x /opt/app-root/bin/usage
+    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/local/bin/usage && \
+    chmod u+x /usr/local/bin/usage
 
 USER 1001
 
 WORKDIR ${HOME}
-
-# Use entrypoint so path is correctly adjusted already at the time the command
-# is searching, so something like docker run IMG gcc runs binary from SCL.
-COPY root/opt/app-root/bin/container-entrypoint /usr/bin/container-entrypoint
-
-# Install the usage script with base image usage informations
-COPY root/opt/app-root/bin/usage /usr/local/bin/usage
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
