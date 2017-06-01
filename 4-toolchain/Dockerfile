@@ -37,8 +37,8 @@ RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \
     useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
     -c "Default Application User" default && \
-    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/local/bin/usage && \
-    chmod u+x /usr/local/bin/usage
+    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/bin/usage && \
+    chmod u+x /usr/bin/usage
 
 USER 1001
 
