@@ -26,7 +26,7 @@ ENV HOME=/root \
     PATH=/root/bin:/opt/rh/devtoolset-4/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN mkdir -p ${HOME} && \
-    chmod u+x /root/bin/usage
+    chmod u+x /usr/bin/usage
 
 USER 0
 
