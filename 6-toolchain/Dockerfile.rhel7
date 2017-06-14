@@ -32,9 +32,8 @@ RUN yum repolist > /dev/null && \
     yum clean all -y
 
 
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
+# Copy extra files to the image.
+COPY ./root/ /
 
 ENV HOME=/opt/app-root/src \
     PATH=/opt/app-root/src/bin:/opt/app-root/bin:/opt/rh/devtoolset-6/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -43,21 +42,12 @@ RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \
     useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
     -c "Default Application User" default && \
-    chown -R 1001:1001 /opt/app-root && \
-    chmod u+x /opt/app-root/bin/usage
+    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/bin/usage && \
+    chmod u+x /usr/bin/usage
 
 USER 1001
 
 WORKDIR ${HOME}
-
-# Use entrypoint so path is correctly adjusted already at the time the command
-# is searching, so something like docker run IMG gcc runs binary from SCL.
-COPY contrib/bin/container-entrypoint /usr/bin/container-entrypoint
-
-# Install the usage script with base image usage informations
-COPY contrib/bin/usage /usr/local/bin/usage
-
-COPY contrib/etc/scl_enable /opt/app-root/etc/scl_enable
 
 # Enable the SCL for all bash scripts.
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
