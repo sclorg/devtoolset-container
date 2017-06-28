@@ -11,7 +11,8 @@ LABEL com.redhat.component="devtoolset-4-perftools-docker" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 4 Performance Tools"
+      io.k8s.display-name="Developer Toolset 4 Performance Tools" \
+      io.k8s.min-memory="2Gi"
 
 # To use subscription inside container yum command has to be run first (before yum-config-manager)
 # https://access.redhat.com/solutions/1443553
