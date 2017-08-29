@@ -14,12 +14,14 @@ LABEL com.redhat.component="devtoolset-6-perftools-docker" \
       io.k8s.display-name="Developer Toolset 6 Performance Tools" \
       io.k8s.min-memory="2Gi"
 
-# To use subscription inside container yum command has to be run first (before yum-config-manager)
-# https://access.redhat.com/solutions/1443553
+# We need to call 2 (!) yum commands before being able to enable repositories properly
+# This is a workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1479388
 RUN yum repolist > /dev/null && \
+    yum install -y yum-utils && \
+    yum-config-manager --disable \* &> /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
+    yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
-    yum-config-manager --disable epel >/dev/null || : && \
     INSTALL_PKGS="devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
