@@ -21,6 +21,7 @@ LABEL com.redhat.component="devtoolset-7-toolchain-docker" \
       io.k8s.display-name="Developer Toolset 7 Toolchain"
 
 RUN yum install -y centos-release-scl-rh && \
+    yum-config-manager --enable centos-sclo-rh-testing && \
     INSTALL_PKGS="devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gcc-gfortran devtoolset-7-gdb" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \

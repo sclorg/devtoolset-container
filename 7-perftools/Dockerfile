@@ -15,6 +15,7 @@ LABEL com.redhat.component="devtoolset-7-perftools-docker" \
       io.k8s.min-memory="2Gi"
 
 RUN yum install -y centos-release-scl-rh && \
+    yum-config-manager --enable centos-sclo-rh-testing && \
     INSTALL_PKGS="devtoolset-7-systemtap devtoolset-7-valgrind devtoolset-7-dyninst devtoolset-7-dyninst-devel devtoolset-7-elfutils devtoolset-7-elfutils-devel devtoolset-7-oprofile devtoolset-7-oprofile-jit devtoolset-7-oprofile-devel" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
