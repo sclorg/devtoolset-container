@@ -16,7 +16,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-6-perftools-rhel7}
+IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-7-perftools-rhel7}
 
 function info () {
     echo -e "\e[1m[INFO] $@\e[0m"

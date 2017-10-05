@@ -1,21 +1,21 @@
 FROM centos:centos7
 LABEL MAINTAINER Red Hat, Inc.
 
-ENV SUMMARY="Red Hat Developer Toolset 6 Performance Tools container image" \
+ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
     DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
 
-LABEL com.redhat.component="devtoolset-6-perftools-docker" \
-      name="centos/devtoolset-6-perftools-centos7" \
-      version="6" \
+LABEL com.redhat.component="devtoolset-7-perftools-docker" \
+      name="centos/devtoolset-7-perftools-centos7" \
+      version="7" \
       release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 6 Performance Tools" \
+      io.k8s.display-name="Developer Toolset 7 Performance Tools" \
       io.k8s.min-memory="2Gi"
 
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="devtoolset-6-systemtap devtoolset-6-valgrind devtoolset-6-dyninst devtoolset-6-dyninst-devel devtoolset-6-elfutils devtoolset-6-elfutils-devel devtoolset-6-oprofile devtoolset-6-oprofile-jit devtoolset-6-oprofile-devel" && \
+    INSTALL_PKGS="devtoolset-7-systemtap devtoolset-7-valgrind devtoolset-7-dyninst devtoolset-7-dyninst-devel devtoolset-7-elfutils devtoolset-7-elfutils-devel devtoolset-7-oprofile devtoolset-7-oprofile-jit devtoolset-7-oprofile-devel" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y
@@ -24,7 +24,7 @@ RUN yum install -y centos-release-scl-rh && \
 COPY ./root/ /
 
 ENV HOME=/root \
-    PATH=/root/bin:/opt/rh/devtoolset-6/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/root/bin:/opt/rh/devtoolset-7/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN mkdir -p ${HOME} && \
     chmod u+x /usr/bin/usage

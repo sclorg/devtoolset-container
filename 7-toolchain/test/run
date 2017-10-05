@@ -14,7 +14,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-6-toolchain-rhel7}
+IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-7-toolchain-rhel7}
 THISDIR=$(dirname ${BASH_SOURCE[0]})
 
 function info () {
