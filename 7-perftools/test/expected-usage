@@ -18,4 +18,4 @@ host, within the container:
 
 and save that container to a reusable image:
 
-   % docker commit  devtoolset-7-perftools-rhel7-3.10.0-327.10.1.el7.x87_74
+   % docker commit  devtoolset-7-perftools-rhel7-3.10.0-327.10.1.el7.x86_64
