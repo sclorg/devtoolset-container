@@ -1,4 +1,4 @@
-FROM rhel7
+FROM rhscl/s2i-core-rhel7
 LABEL MAINTAINER Marek Polacek <polacek@redhat.com>
 
 ENV SUMMARY="Red Hat Developer Toolset 4 Toolchain container image" \
@@ -39,10 +39,10 @@ ENV HOME=/opt/app-root/src \
 
 RUN mkdir -p ${HOME} && \
     groupadd -r default -f -g 1001 && \
-    useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
-    -c "Default Application User" default && \
+    usermod -g default default && \
     chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/bin/usage && \
-    chmod u+x /usr/bin/usage
+    chmod u+x /usr/bin/usage && \
+    rpm-file-permissions
 
 USER 1001
 
