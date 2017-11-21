@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM centos/s2i-core-centos7
 LABEL MAINTAINER Red Hat, Inc.
 
 ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
@@ -27,7 +27,8 @@ ENV HOME=/root \
     PATH=/root/bin:/opt/rh/devtoolset-7/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN mkdir -p ${HOME} && \
-    chmod u+x /usr/bin/usage
+    chmod u+x /usr/bin/usage && \
+    rpm-file-permissions
 
 USER 0
 
