@@ -17,12 +17,12 @@ LABEL com.redhat.component="devtoolset-7-toolchain-docker" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 7 Toolchain"
+      io.k8s.display-name="Developer Toolset 7 Toolchain" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z rhscl/devtoolset-7-toolchain-rhel7 bash"
 
 RUN yum install -y yum-utils && \
     yum-config-manager --disable \* &> /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
-    yum-config-manager --enable rhel-server-rhscl-7-beta-rpms \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     INSTALL_PKGS="devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gcc-gfortran devtoolset-7-gdb" && \

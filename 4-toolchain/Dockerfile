@@ -18,7 +18,8 @@ LABEL com.redhat.component="devtoolset-4-toolchain-docker" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 4 Toolchain"
+      io.k8s.display-name="Developer Toolset 4 Toolchain" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z centos/devtoolset-4-toolchain-centos7 bash"
 
 RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="devtoolset-4-gcc devtoolset-4-gcc-c++ devtoolset-4-gcc-gfortran devtoolset-4-gdb" && \

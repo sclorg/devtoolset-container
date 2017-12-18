@@ -12,7 +12,8 @@ LABEL com.redhat.component="devtoolset-6-perftools-docker" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
       io.k8s.display-name="Developer Toolset 6 Performance Tools" \
-      io.k8s.min-memory="2Gi"
+      io.k8s.min-memory="2Gi" \
+      usage="docker run -ti -v /bin:/host:ro rhscl/devtoolset-6-perftools-rhel7 eu-objdump -d /host/<binary>"
 
 RUN yum install -y yum-utils && \
     yum-config-manager --disable \* &> /dev/null && \

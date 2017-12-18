@@ -12,7 +12,8 @@ LABEL com.redhat.component="devtoolset-4-perftools-docker" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
       io.k8s.display-name="Devtoolset 4 Perftools" \
-      io.k8s.min-memory="2Gi"
+      io.k8s.min-memory="2Gi" \
+      usage="docker run -ti -v /bin:/host:ro centos/devtoolset-6-perftools-centos7 eu-objdump -d /host/<binary>"
 
 RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="devtoolset-4-systemtap devtoolset-4-valgrind devtoolset-4-dyninst devtoolset-4-dyninst-devel devtoolset-4-elfutils devtoolset-4-elfutils-devel devtoolset-4-oprofile devtoolset-4-oprofile-jit devtoolset-4-oprofile-devel" && \
