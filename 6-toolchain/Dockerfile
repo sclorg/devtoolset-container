@@ -14,7 +14,6 @@ Red Hat Enterprise Linux."
 LABEL com.redhat.component="devtoolset-6-toolchain-docker" \
       name="centos/devtoolset-6-toolchain-centos7" \
       version="6" \
-      release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \

@@ -7,7 +7,6 @@ ENV SUMMARY="Red Hat Developer Toolset 6 Performance Tools container image" \
 LABEL com.redhat.component="devtoolset-6-perftools-docker" \
       name="centos/devtoolset-6-perftools-centos7" \
       version="6" \
-      release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
