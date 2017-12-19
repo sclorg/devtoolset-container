@@ -7,12 +7,12 @@ ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
 LABEL com.redhat.component="devtoolset-7-perftools-docker" \
       name="centos/devtoolset-7-perftools-centos7" \
       version="7" \
-      release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
       io.k8s.display-name="Developer Toolset 7 Performance Tools" \
-      io.k8s.min-memory="2Gi"
+      io.k8s.min-memory="2Gi" \
+      usage="docker run -ti -v /bin:/host:ro centos/devtoolset-7-perftools-centos7 eu-objdump -d /host/<binary>"
 
 RUN yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \

@@ -14,11 +14,11 @@ Red Hat Enterprise Linux."
 LABEL com.redhat.component="devtoolset-6-toolchain-docker" \
       name="centos/devtoolset-6-toolchain-centos7" \
       version="6" \
-      release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 6 Toolchain"
+      io.k8s.display-name="Developer Toolset 6 Toolchain" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z centos/devtoolset-6-toolchain-centos7 bash"
 
 RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="devtoolset-6-gcc devtoolset-6-gcc-c++ devtoolset-6-gcc-gfortran devtoolset-6-gdb" && \

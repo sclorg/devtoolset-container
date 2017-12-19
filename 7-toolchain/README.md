@@ -35,9 +35,9 @@ Environment variables and volumes
 ---------------------------------
 You can set the following mount points by passing the `-v /host:/container` flag to Docker.
 
-|  Volume mount point      | Description                       |
-| :----------------------- | --------------------------------- |
-|  `/opt/app-root`         | Directory for application sources |
+**`/opt/app-root`**  
+       Directory for application sources
+
 
 
 

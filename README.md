@@ -2,7 +2,7 @@ Developer Toolset Docker images
 ===============================
 
 This repository contains Dockerfiles for Developer Toolset images.
-Users can choose between RHEL and CentOS based images.
+Users can choose between RHEL, Fedora and CentOS based images.
 
 For more information about contributing, see
 [the Contribution Guidelines](https://github.com/sclorg/welcome/blob/master/contribution.md).
@@ -17,6 +17,8 @@ Developer toolset versions and variants currently provided are:
 * [Perftools Container Image from Developer Toolset 4](4-perftools)
 * [Toolchain Container Image from Developer Toolset 6](6-toolchain)
 * [Perftools Container Image from Developer Toolset 6](6-perftools)
+* [Toolchain Container Image from Developer Toolset 7](7-toolchain)
+* [Perftools Container Image from Developer Toolset 7](7-perftools)
 
 RHEL versions currently supported are:
 * RHEL7
@@ -31,10 +33,12 @@ Choose either the CentOS7 or RHEL7 based image:
 
 *  **RHEL7 based image**
 
-    This image is available in Red Hat Container Registry. To download it run:
+
+    These images are available in the [Red Hat Container Catalog](https://access.redhat.com/containers/#/registry.access.redhat.com/rhscl/devtooset-7-toolchain-rhel7).
+    To download it run:
 
     ```
-    $ docker pull registry.access.redhat.com/rhscl/devtooset-6-toolchain-rhel7
+    $ docker pull registry.access.redhat.com/rhscl/devtooset-7-toolchain-rhel7
     ```
 
     To build a RHEL7 based DevToolset Toolchain image, you need to run Docker build on a properly
@@ -44,7 +48,7 @@ Choose either the CentOS7 or RHEL7 based image:
     $ git clone --recursive https://github.com/sclorg/devtoolset-container.git
     $ cd devtoolset-container
     $ git submodule update --init
-    $ make build TARGET=rhel7 VERSIONS=6-toolchain
+    $ make build TARGET=rhel7 VERSIONS=7-toolchain
     ```
 
 *  **CentOS7 based image**
@@ -52,7 +56,7 @@ Choose either the CentOS7 or RHEL7 based image:
     This image is available on DockerHub. To download it run:
 
     ```
-    $ docker pull centos/devtooset-6-toolchain-centos7
+    $ docker pull centos/devtooset-7-toolchain-centos7
     ```
 
     To build a CentOS based DevToolset Toolchain image from scratch run:
@@ -61,10 +65,10 @@ Choose either the CentOS7 or RHEL7 based image:
     $ git clone --recursive https://github.com/sclorg/devtoolset-container.git
     $ cd devtoolset-container
     $ git submodule update --init
-    $ make build TARGET=centos7 VERSIONS=6-toolchain
+    $ make build TARGET=centos7 VERSIONS=7-toolchain
     ```
 
-For using other versions or variants of DevToolset Toolchain, just replace the `6-toolchain` value by particular version
+For using other versions or variants of DevToolset Toolchain, just replace the `7-toolchain` value by particular version
 in the commands above.
 
 **Notice: By omitting the `VERSIONS` parameter, the build/test action will be performed
@@ -75,8 +79,23 @@ This variable must be set to a list with possible versions (subdirectories).**
 Usage
 ---------------------------------
 
-For information about usage of Dockerfile for DevToolset Toolchain,
-see [usage documentation](2.4).
+For information about usage of the Toolchain Container Image from Developer Toolset 4,
+see [usage documentation](4-toolchain).
+
+For information about usage of the Perftools Container Image from Developer Toolset 4,
+see [usage documentation](4-perftools).
+
+For information about usage of the Toolchain Container Image from Developer Toolset 6,
+see [usage documentation](6-toolchain).
+
+For information about usage of the Perftools Container Image from Developer Toolset 6,
+see [usage documentation](6-perftools).
+
+For information about usage of the Toolchain Container Image from Developer Toolset 7,
+see [usage documentation](7-toolchain).
+
+For information about usage of the Perftools Container Image from Developer Toolset 7,
+see [usage documentation](7-perftools).
 
 
 Test
@@ -95,7 +114,7 @@ Users can choose between testing DevToolset Toolchain based on a RHEL or CentOS 
     ```
     $ cd devtoolset-container
     $ git submodule update --init
-    $ make test TARGET=rhel7 VERSIONS=6-toolchain
+    $ make test TARGET=rhel7 VERSIONS=7-toolchain
     ```
 
 *  **CentOS based image**
@@ -103,10 +122,10 @@ Users can choose between testing DevToolset Toolchain based on a RHEL or CentOS 
     ```
     $ cd devtoolset-container
     $ git submodule update --init
-    $ make test TARGET=centos7 VERSIONS=6-toolchain
+    $ make test TARGET=centos7 VERSIONS=7-toolchain
     ```
 
-For using other versions of DevToolset Toolchain, just replace the `6-toolchain` value by particular version
+For using other versions of DevToolset Toolchain, just replace the `7-toolchain` value by particular version
 in the commands above.
 
 **Notice: By omitting the `VERSIONS` parameter, the build/test action will be performed

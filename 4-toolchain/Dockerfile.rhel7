@@ -14,11 +14,11 @@ Red Hat Enterprise Linux."
 LABEL com.redhat.component="devtoolset-4-toolchain-docker" \
       name="rhscl/devtoolset-4-toolchain-rhel7" \
       version="4" \
-      release="1" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 4 Toolchain"
+      io.k8s.display-name="Developer Toolset 4 Toolchain" \
+      usage="docker run -ti -v /src/app:/opt/app-root/src:z rhscl/devtoolset-4-toolchain-rhel7 bash"
 
 RUN yum install -y yum-utils && \
     yum-config-manager --disable \* &> /dev/null && \
