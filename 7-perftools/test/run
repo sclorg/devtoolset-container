@@ -69,9 +69,9 @@ function test_sanity_valgrind_usage () {
 }
 
 function test_sanity_valgrind_run () {
-  info "Testing 'valgrind /foo/ls' usage ..."
+  info "Testing 'valgrind /bin/ls' usage ..."
 
-  docker run --rm -v /bin:/foo:ro $IMAGE_NAME valgrind /foo/ls &> $TMPDIR/actual-valgrind-run
+  docker run --rm -v /bin:/foo:ro $IMAGE_NAME valgrind /bin/ls &> $TMPDIR/actual-valgrind-run
   check_result "Exit code is zero" $? 0
 
   grep 'ERROR SUMMARY: 0 errors from 0 contexts' $TMPDIR/actual-valgrind-run &> /dev/null
