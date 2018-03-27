@@ -23,11 +23,12 @@ RHEL versions currently supported are:
 
 CentOS versions currently supported are:
 * CentOS7
+* CentOS6
 
 
 Installation
 ----------------------
-Choose either the CentOS7 or RHEL7 based image:
+Choose either the Centos6, CentOS7 or RHEL7 based image:
 
 *  **RHEL7 based image**
 
@@ -66,6 +67,16 @@ Choose either the CentOS7 or RHEL7 based image:
     $ make build TARGET=centos7 VERSIONS=7-toolchain
     ```
 
+*  **CentOS6 based image**
+
+    To build a CentOS6 based DevToolset Toolchain image from scratch run:
+
+    ```
+    $ git clone --recursive https://github.com/sclorg/devtoolset-container.git
+    $ cd devtoolset-container
+    $ git submodule update --init
+    $ make build TARGET=centos6 VERSIONS=7-toolchain
+    ```
 For using other versions or variants of DevToolset Toolchain, just replace the `7-toolchain` value by particular version
 in the commands above.
 
