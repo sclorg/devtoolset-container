@@ -4,7 +4,7 @@ LABEL MAINTAINER Red Hat, Inc.
 ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
     DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
 
-LABEL com.redhat.component="devtoolset-7-perftools-docker" \
+LABEL com.redhat.component="devtoolset-7-perftools-container" \
       name="centos/devtoolset-7-perftools-centos7" \
       version="7" \
       summary="$SUMMARY" \
