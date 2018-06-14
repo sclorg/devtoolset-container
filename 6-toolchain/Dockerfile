@@ -11,7 +11,7 @@ Enterprise Linux. Executables built with the Red Hat Developer Toolset \
 toolchain can then also be deployed and run on multiple versions of \
 Red Hat Enterprise Linux."
 
-LABEL com.redhat.component="devtoolset-6-toolchain-docker" \
+LABEL com.redhat.component="devtoolset-6-toolchain-container" \
       name="centos/devtoolset-6-toolchain-centos7" \
       version="6" \
       summary="$SUMMARY" \
