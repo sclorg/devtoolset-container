@@ -1,21 +1,25 @@
-This is a devtoolset-8-perftools base image.  It contains the dts-8
+#!/bin/sh
+cat <<EOF
+This is a devtoolset-7-perftools base image.  It contains the dts-7
 systemtap, dyninst (+devel), elfutils (+devel), valgrind packages.
 These are usually intended to monitor the host or other containers,
 so this image should normally be launched in a privileged container.
 
 Sample invocation:
 
-   % atomic run --spc devtoolset-8-perftools-rhel7 /bin/bash
-or % docker run -ti --privileged --ipc=host --net=host --pid=host [...]             devtoolset-8-perftools-rhel7 /bin/bash
+   % atomic run --spc devtoolset-7-perftools-rhel7 /bin/bash
+or % docker run -ti --privileged --ipc=host --net=host --pid=host [...] \
+            devtoolset-7-perftools-rhel7 /bin/bash
 
 
 For using systemtap, also install a kernel, kernel-devel,
 plus possibly kernel-debuginfo, all matching the container
 host, within the container:
 
-   % atomic run devtoolset-8-perftools-rhel7 /bin/bash
+   % atomic run devtoolset-7-perftools-rhel7 /bin/bash
    # yum -y install kernel kernel-devel kernel-debuginfo
 
 and save that container to a reusable image:
 
-   % docker commit  devtoolset-8-perftools-rhel7-3.10.0-327.10.1.el7.x86_64
+   % docker commit $CONTAINER devtoolset-7-perftools-rhel7-`uname -r`
+EOF

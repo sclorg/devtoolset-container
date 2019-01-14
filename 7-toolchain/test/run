@@ -14,7 +14,7 @@ if [ "$DEBUG" != "" ]; then
   set -x
 fi
 
-IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-8-toolchain-rhel7}
+IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-7-toolchain-rhel7}
 THISDIR=$(dirname ${BASH_SOURCE[0]})
 
 function info () {
@@ -68,7 +68,7 @@ function test_sanity_gdb_usage () {
   docker run --rm $IMAGE_NAME gdb -v &> $TMPDIR/actual-gdb-v
   check_result "Exit code is zero" $? 0
 
-  grep 'GNU gdb (GDB) Red Hat Enterprise Linux ' $TMPDIR/actual-gdb-v &> /dev/null
+  grep 'GNU gdb (GDB)' $TMPDIR/actual-gdb-v &> /dev/null
   check_result "Output contains gdb version" $? 0
 }
 

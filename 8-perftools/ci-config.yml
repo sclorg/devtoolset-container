@@ -1,0 +1,27 @@
+---
+
+# Configuration for BaseOS CI service
+
+labels:
+  Config:
+    Labels:
+      authoritative-source-url: registry.access.redhat.com
+      architecture: {{ ENV.IMAGE_ARCH }}
+      com.redhat.component: devtoolset-8-perftools-container
+      io.k8s.description: >
+        Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile ltrace dwz make memstomp strace
+      io.k8s.display-name: Developer Toolset 8 Performance Tools
+      License: $exists
+      name: rhscl/devtoolset-8-perftools-rhel7
+      release: "{{ ENV.IMAGE_RELEASE }}"
+      version: "8"
+      vendor: Red Hat, Inc.
+
+    User: "0"
+    Volumes: null
+
+functional:
+  git: "git://pkgs.devel.redhat.com/containers/devtoolset-8-perftools"
+  branch: devtoolset-8.0-rhel-7
+  path: devtoolset-8-perftools/
+  script: test/run

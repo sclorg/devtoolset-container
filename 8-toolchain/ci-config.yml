@@ -1,0 +1,31 @@
+---
+
+# Configuration for BaseOS CI service
+
+labels:
+  Config:
+    Labels:
+      authoritative-source-url: registry.access.redhat.com
+      architecture: "{{ ENV.IMAGE_ARCH }}"
+      com.redhat.component: devtoolset-8-toolchain-container
+      io.k8s.description: >
+        Platform for building C/C++ applications using Red Hat Developer Toolset 8. Red Hat Developer Toolset is
+        a Red Hat offering for developers on the Red Hat Enterprise Linux platform. It provides a complete set of
+        development and performance analysis tools that can be installed and used on multiple versions of Red Hat
+        Enterprise Linux. Executables built with the Red Hat Developer Toolset toolchain can then also be deployed
+        and run on multiple versions of Red Hat Enterprise Linux.
+      io.k8s.display-name: Developer Toolset 8 Toolchain
+      License: $exists
+      name: rhscl/devtoolset-8-toolchain-rhel7
+      release: "{{ ENV.IMAGE_RELEASE }}"
+      version: "8"
+      vendor: Red Hat, Inc.
+
+    User: "1001"
+    Volumes: null
+
+functional:
+  git: "git://pkgs.devel.redhat.com/containers/devtoolset-8-toolchain"
+  branch: devtoolset-8.0-rhel-7
+  path: devtoolset-8-toolchain/
+  script: test/run

@@ -6,12 +6,5 @@
 ---
 x86_64:
 - rhel-7-server-rpms
+- rhel-7-server-optional-rpms
 - rhel-server-rhscl-7-rpms
-
-ppc64le:
-- rhel-7-for-power-le-rpms
-- rhel-7-server-for-power-le-rhscl-rpms
-
-s390x:
-- rhel-7-for-system-z-rpms
-- rhel-7-server-for-system-z-rhscl-rpms
