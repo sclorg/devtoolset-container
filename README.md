@@ -13,8 +13,6 @@ For more information about concepts used in these docker images, see the
 Versions
 ---------------
 Developer toolset versions and variants currently provided are:
-* [Toolchain Container Image from Developer Toolset 6](6-toolchain)
-* [Perftools Container Image from Developer Toolset 6](6-perftools)
 * [Toolchain Container Image from Developer Toolset 7](7-toolchain)
 * [Perftools Container Image from Developer Toolset 7](7-perftools)
 
@@ -76,12 +74,6 @@ This variable must be set to a list with possible versions (subdirectories).**
 
 Usage
 ---------------------------------
-
-For information about usage of the Toolchain Container Image from Developer Toolset 6,
-see [usage documentation](6-toolchain).
-
-For information about usage of the Perftools Container Image from Developer Toolset 6,
-see [usage documentation](6-perftools).
 
 For information about usage of the Toolchain Container Image from Developer Toolset 7,
 see [usage documentation](7-toolchain).
