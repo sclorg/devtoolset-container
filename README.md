@@ -30,11 +30,11 @@ Choose either the CentOS7 or RHEL7 based image:
 *  **RHEL7 based image**
 
 
-    These images are available in the [Red Hat Container Catalog](https://access.redhat.com/containers/#/registry.access.redhat.com/rhscl/devtooset-7-toolchain-rhel7).
+    These images are available in the [Red Hat Container Catalog](https://access.redhat.com/containers/#/registry.access.redhat.com/rhscl/devtoolset-7-toolchain-rhel7).
     To download it run:
 
     ```
-    $ docker pull registry.access.redhat.com/rhscl/devtooset-7-toolchain-rhel7
+    $ docker pull registry.access.redhat.com/rhscl/devtoolset-7-toolchain-rhel7
     ```
 
     To build a RHEL7 based DevToolset Toolchain image, you need to run Docker build on a properly
@@ -52,7 +52,7 @@ Choose either the CentOS7 or RHEL7 based image:
     This image is available on DockerHub. To download it run:
 
     ```
-    $ docker pull centos/devtooset-7-toolchain-centos7
+    $ docker pull centos/devtoolset-7-toolchain-centos7
     ```
 
     To build a CentOS based DevToolset Toolchain image from scratch run:
