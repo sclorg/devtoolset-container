@@ -1,0 +1,154 @@
+#!/bin/bash
+#
+# The 'run' script performs simple tests that verifies usability
+# of tools, packaged in toolchain image.
+#
+# IMAGE_NAME specifies a name of the candidate image used for testing.
+# The image has to be available before this script is executed.
+#
+# DEBUG environment variable, if not empty, makes 'run' to log every step
+# of testing.
+#
+
+if [ "$DEBUG" != "" ]; then
+  set -x
+fi
+
+IMAGE_NAME=${IMAGE_NAME:-rhscl/devtoolset-7-toolchain-rhel7}
+THISDIR=$(dirname ${BASH_SOURCE[0]})
+
+function info () {
+    echo -e "\e[1m[INFO] $@\e[0m"
+}
+
+function pass () {
+    echo -e "\e[1;32m[PASS] $@\e[0m"
+}
+
+function error () {
+    echo -e "\e[1;31m[ERROR] $@\e[0m"
+}
+
+function check_result() {
+    local label="$1"
+    local result="$2"
+    local expected="$3"
+
+    if [[ "$result" = "$expected" ]]; then
+        pass "$label: PASS"
+    else
+        error "$label: FAIL ($result)"
+        RESULT=1
+    fi
+}
+
+function test_docker_run_usage () {
+  info "Testing 'docker run' usage ..."
+
+  docker run --rm $IMAGE_NAME > $TMPDIR/actual-usage
+  check_result "Exit code is zero" $? 0
+
+  diff "$THISDIR"/expected-usage $TMPDIR/actual-usage &> /dev/null
+  check_result "Usage info matches the expected text" $? 0
+}
+
+function test_sanity_gcc_usage () {
+  info "Testing 'gcc -v' usage ..."
+
+  docker run --rm $IMAGE_NAME gcc -v &> $TMPDIR/actual-gcc-v
+  check_result "Exit code is zero" $? 0
+
+  grep 'gcc version ' $TMPDIR/actual-gcc-v &> /dev/null
+  check_result "Output contains gcc version" $? 0
+}
+
+function test_sanity_gdb_usage () {
+  info "Testing 'gdb -v' usage ..."
+
+  docker run --rm $IMAGE_NAME gdb -v &> $TMPDIR/actual-gdb-v
+  check_result "Exit code is zero" $? 0
+
+  grep 'GNU gdb (GDB)' $TMPDIR/actual-gdb-v &> /dev/null
+  check_result "Output contains gdb version" $? 0
+}
+
+function test_gcc_compile () {
+  info "Testing compilation via 'docker run gcc foo.c ..."
+
+  rm -f $TMPDIR/foo $TMPDIR/foo.c
+
+  cat << EOF > $TMPDIR/foo.c
+#include <stdio.h>
+
+int main(int argc, char **argv) { printf("Hello world from containerized gcc!\n"); return 0; }
+EOF
+
+  docker run --rm -v $TMPDIR:$TMPDIR:z $IMAGE_NAME gcc -o $TMPDIR/foo $TMPDIR/foo.c
+  check_result "Exit code is zero" $? 0
+
+  test -e $TMPDIR/foo
+  check_result "Compiled binary exists" $? 0
+
+  $TMPDIR/foo &> $TMPDIR/actual-output
+  check_result "Exit code of compiled binary is zero" $? 0
+
+  grep "Hello world from containerized gcc!" $TMPDIR/actual-output &> /dev/null
+  check_result "Compiled binary works" $? 0
+}
+
+function test_gdb_batch_debug () {
+  info "Testing debugging via 'docker run gdb -batch ..."
+
+  rm -f $TMPDIR/foo $TMPDIR/foo.c
+
+  cat << EOF > $TMPDIR/foo.c
+#include <stdlib.h>
+#include <limits.h>
+
+int main(int argc, char **argv)
+{
+  char *s = NULL;
+  int i;
+
+  for (i = 0; i < INT_MAX; i++)
+    s[i] = 'f';
+
+  return 0;
+}
+EOF
+
+  docker run --rm -v $TMPDIR:$TMPDIR:z $IMAGE_NAME gcc -o $TMPDIR/foo -ggdb -g2 $TMPDIR/foo.c
+  check_result "Compile test binary" $? 0
+
+  test -e $TMPDIR/foo
+  check_result "Test binary exists" $? 0
+
+  docker run --rm --privileged -v $TMPDIR:$TMPDIR:z $IMAGE_NAME gdb -batch -ex 'run' -ex 'bt' $TMPDIR/foo &> $TMPDIR/actual-output
+  check_result "Exit code is zero" $? 0
+
+  grep -q "Program received signal SIGSEGV, Segmentation fault." $TMPDIR/actual-output &> /dev/null
+  check_result "GDB output informs about segfault" $? 0
+
+  grep -q "s\[i\] = 'f';" $TMPDIR/actual-output &> /dev/null
+  check_result "GDB output prints source line" $? 0
+}
+
+TMPDIR=`mktemp -d`
+chmod a+rwx $TMPDIR
+
+RESULT=0
+
+test_docker_run_usage
+test_sanity_gcc_usage
+test_sanity_gdb_usage
+test_gcc_compile
+test_gdb_batch_debug
+
+rm -rf $TMPDIR
+
+if [ "$RESULT" = "0" ]; then
+    info "All tests finished"
+else
+    error "Some tests failed"
+    exit $RESULT
+fi
