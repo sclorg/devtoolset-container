@@ -1,21 +1,22 @@
 FROM centos/s2i-core-centos7
 LABEL MAINTAINER Red Hat, Inc.
 
-ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
-    DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile"
+ENV SUMMARY="Red Hat Developer Toolset 8 Performance Tools container image" \
+    DESCRIPTION="Performance tools: systemtap, valgrind, dyninst, elfutils, oprofile ltrace dwz make memstomp strace"
 
-LABEL com.redhat.component="devtoolset-7-perftools-container" \
-      name="centos/devtoolset-7-perftools-centos7" \
-      version="7" \
+LABEL com.redhat.component="devtoolset-8-perftools-container" \
+      name="centos/devtoolset-8-perftools-centos7" \
+      version="8" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Developer Toolset 7 Performance Tools" \
+      io.k8s.display-name="Developer Toolset 8 Performance Tools" \
       io.k8s.min-memory="2Gi" \
-      usage="docker run -ti -v /bin:/host:ro centos/devtoolset-7-perftools-centos7 eu-objdump -d /host/<binary>"
+      maintainer="Frank Eigler <fche@redhat.com>"
 
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="devtoolset-7-systemtap devtoolset-7-valgrind devtoolset-7-dyninst devtoolset-7-dyninst-devel devtoolset-7-elfutils devtoolset-7-elfutils-devel devtoolset-7-oprofile devtoolset-7-oprofile-jit devtoolset-7-oprofile-devel" && \
+    INSTALL_PKGS="devtoolset-8-systemtap devtoolset-8-valgrind devtoolset-8-elfutils devtoolset-8-elfutils-devel devtoolset-8-oprofile devtoolset-8-oprofile-jit devtoolset-8-oprofile-devel devtoolset-8-ltrace devtoolset-8-dwz devtoolset-8-make devtoolset-8-memstomp devtoolset-8-strace" && \
+    [ $(uname -m) = "x86_64" ] && INSTALL_PKGS="$INSTALL_PKGS devtoolset-8-dyninst devtoolset-8-dyninst-devel" || : && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
@@ -24,7 +25,7 @@ RUN yum install -y centos-release-scl-rh && \
 COPY ./root/ /
 
 ENV HOME=/root \
-    PATH=/root/bin:/opt/rh/devtoolset-7/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/root/bin:/opt/rh/devtoolset-8/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN mkdir -p ${HOME} && \
     chmod u+x /usr/bin/usage && \

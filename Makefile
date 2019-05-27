@@ -1,6 +1,6 @@
 # Variables are documented in common/build.sh.
 BASE_IMAGE_NAME = devtoolset
-VERSIONS = 7-toolchain 7-perftools
+VERSIONS = 7-toolchain 7-perftools 8-toolchain 8-perftools
 OPENSHIFT_NAMESPACES = 
 
 # HACK:  Ensure that 'git pull' for old clones doesn't cause confusion.
