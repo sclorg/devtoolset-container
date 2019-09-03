@@ -7,6 +7,7 @@ ENV SUMMARY="Red Hat Developer Toolset 7 Performance Tools container image" \
 LABEL com.redhat.component="devtoolset-7-perftools-container" \
       name="rhscl/devtoolset-7-perftools-rhel7" \
       version="7" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#rhel" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \

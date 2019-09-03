@@ -14,6 +14,7 @@ Red Hat Enterprise Linux."
 LABEL com.redhat.component="devtoolset-7-toolchain-container" \
       name="rhscl/devtoolset-7-toolchain-rhel7" \
       version="7" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#rhel" \
       summary="$SUMMARY" \
       description="$DESCRIPTION" \
       io.k8s.description="$DESCRIPTION" \
