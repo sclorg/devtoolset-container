@@ -21,7 +21,7 @@ LABEL com.redhat.component="devtoolset-7-toolchain-container" \
       usage="docker run -ti -v /src/app:/opt/app-root/src:z centos/devtoolset-7-toolchain-centos7 bash"
 
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gcc-gfortran devtoolset-7-gdb" && \
+    INSTALL_PKGS="devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gcc-gfortran devtoolset-7-gdb make" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
