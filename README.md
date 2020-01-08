@@ -9,7 +9,8 @@ For more information about contributing, see
 For more information about concepts used in these docker images, see the
 [Landing page](https://github.com/sclorg/welcome).
 
-
+There are no supported Developer toolset versions and variants.
+<!--
 Versions
 ---------------
 Developer toolset versions and variants currently provided are:
@@ -21,7 +22,6 @@ RHEL versions currently supported are:
 
 CentOS versions currently supported are:
 * CentOS7
-
 
 Installation
 ----------------------
@@ -115,3 +115,4 @@ in the commands above.
 **Notice: By omitting the `VERSIONS` parameter, the build/test action will be performed
 on all provided versions of DevToolset Toolchain, which must be specified in  `VERSIONS` variable.
 This variable must be set to a list with possible versions (subdirectories).**
+-->
